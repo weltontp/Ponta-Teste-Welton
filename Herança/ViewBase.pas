@@ -53,6 +53,8 @@ type
     btnSelecionar: TToolButton;
     btnSair: TToolButton;
     ToolButton2: TToolButton;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStyleOdd: TcxStyle;
     procedure btnSairClick(Sender: TObject);
     procedure btnIncluirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -65,6 +67,7 @@ type
     procedure btnSelecionarClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure PageControl1Changing(Sender: TObject; var AllowChange: Boolean);
+    procedure cxGrid1DBTableView1DblClick(Sender: TObject);
   private
     { Private declarations }
     procedure ControlButtons(AButton: TToolButton);
@@ -179,12 +182,21 @@ begin
   btnProximo.Enabled               := (not btnCancelar.Enabled);
 end;
 
+procedure TBase.cxGrid1DBTableView1DblClick(Sender: TObject);
+begin
+  if btnSair.Enabled then
+    btnSelecionarClick(Sender);
+end;
+
 procedure TBase.DisableAllMenu;
 begin
   for var i := 0 to ComponentCount -1 do
   begin
     if Components[i].ClassType = TToolButton then
-      TToolButton(Components[i]).Enabled := False;
+    begin
+      if TToolButton(Components[i]).Name <> 'btnSair' then
+        TToolButton(Components[i]).Enabled := False;
+    end;
   end;
 end;
 

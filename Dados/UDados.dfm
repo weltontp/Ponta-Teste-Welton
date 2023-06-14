@@ -135,6 +135,7 @@ object DmDados: TDmDados
     object cdsAnimalFAZENDA: TIntegerField
       DisplayLabel = 'Fazenda'
       FieldName = 'FAZENDA'
+      OnValidate = cdsAnimalFAZENDAValidate
     end
     object cdsAnimalNOME: TStringField
       DisplayLabel = 'Nome'
@@ -159,7 +160,7 @@ object DmDados: TDmDados
     Aggregates = <>
     Params = <>
     ProviderName = 'dspAnimal'
-    BeforePost = cdsAnimalTempBeforePost
+    BeforeInsert = cdsAnimalTempBeforeInsert
     Left = 432
     Top = 200
     object cdsAnimalTempID: TIntegerField
@@ -173,6 +174,7 @@ object DmDados: TDmDados
     object cdsAnimalTempFAZENDA: TIntegerField
       DisplayLabel = 'Fazenda'
       FieldName = 'FAZENDA'
+      OnValidate = cdsAnimalTempFAZENDAValidate
     end
     object cdsAnimalTempNOME: TStringField
       DisplayLabel = 'Nome'

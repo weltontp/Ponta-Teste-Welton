@@ -2,8 +2,8 @@ object FrmPrincipal: TFrmPrincipal
   Left = 0
   Top = 0
   Caption = 'Agro'
-  ClientHeight = 437
-  ClientWidth = 1080
+  ClientHeight = 327
+  ClientWidth = 714
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,11 +12,12 @@ object FrmPrincipal: TFrmPrincipal
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
+  Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
   object MainMenu1: TMainMenu
-    Left = 952
-    Top = 184
+    Left = 16
+    Top = 8
     object Cadastro1: TMenuItem
       Caption = 'Cadastro'
       object Fazenda1: TMenuItem

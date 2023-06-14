@@ -12,7 +12,8 @@ uses
   System.ImageList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ToolWin, Vcl.StdCtrls,
   Vcl.ExtCtrls, cxGridLevel, cxClasses, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.Buttons, Vcl.Mask, Vcl.DBCtrls,
-  cxButtonEdit, Vcl.Grids, Vcl.DBGrids;
+  cxButtonEdit, Vcl.Grids, Vcl.DBGrids, cxContainer, cxTextEdit, cxCurrencyEdit,
+  cxDBEdit;
 
 type
   TFrmAnimal = class(TBase)
@@ -23,9 +24,7 @@ type
     Label1: TLabel;
     Label2: TLabel;
     DBEdit1: TDBEdit;
-    DBEdit2: TDBEdit;
     Label3: TLabel;
-    DBEdit3: TDBEdit;
     BitBtn1: TBitBtn;
     DBEdit4: TDBEdit;
     cxGrid2: TcxGrid;
@@ -34,19 +33,21 @@ type
     cxGridAnimalTempTAG: TcxGridDBColumn;
     cxGridAnimalTempFAZENDA: TcxGridDBColumn;
     cxGridAnimalTempNOME: TcxGridDBColumn;
+    DBEdit2: TcxDBCurrencyEdit;
+    DBEdit3: TcxDBCurrencyEdit;
     procedure btnIncluirClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnAnteriorClick(Sender: TObject);
     procedure btnProximoClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
-    procedure cxGridAnimalTempFAZENDAPropertiesValidate(Sender: TObject;
-      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
     procedure cxGridAnimalTempFAZENDAPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure FormShow(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure DBEdit3Exit(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure DBEdit3PropertiesChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,8 +77,8 @@ begin
 
     if FrmFazenda.ShowModal = mrOk then
     begin
-      DmDados.cdsAnimalTempFAZENDA.AsInteger := DmDados.cdsFazendaID.AsInteger;
-      DmDados.cdsAnimalTempNOME.AsString     := DmDados.cdsFazendaNOME.AsString;
+      DmDados.cdsAnimalFAZENDA.AsInteger := DmDados.cdsFazendaID.AsInteger;
+      DmDados.cdsAnimalNOME.AsString     := DmDados.cdsFazendaNOME.AsString;
     end;
   finally
     FreeAndNil(FrmFazenda);
@@ -106,6 +107,22 @@ begin
   DmDados.cdsAnimal.Cancel;
   DmDados.cdsAnimalTemp.Cancel;
   DmDados.cdsAnimalTemp.EmptyDataSet;
+end;
+
+procedure TFrmAnimal.btnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if not DmDados.cdsAnimal.IsEmpty then
+  begin
+    if Application.MessageBox(PChar(Format('Deseja realmente excluir o animal tag: "%s" ?', [DmDados.cdsAnimalTAG.AsString])), 'Aviso', MB_ICONQUESTION + MB_YESNO) = ID_YES then
+    begin
+      DmDados.cdsAnimal.Delete;
+      DmDados.cdsAnimal.ApplyUpdates(0);
+    end;
+  end
+  else
+    Application.MessageBox('Não existem registros para excluir. Verifique !', 'Aviso', MB_ICONINFORMATION + MB_OK)
+
 end;
 
 procedure TFrmAnimal.btnIncluirClick(Sender: TObject);
@@ -140,48 +157,87 @@ procedure TFrmAnimal.btnSalvarClick(Sender: TObject);
     Result := DmDados.sqlQuery.FieldByName('newcodigo').AsInteger;
   end;
 
+  function ValidarMultiplosRegistros: Boolean;
+  begin
+    DmDados.cdsAnimalTemp.First;
+    while not DmDados.cdsAnimalTemp.Eof do
+    begin
+      Result := ((DmDados.cdsAnimalTempTAG.AsString <> EmptyStr) and
+                 (DmDados.cdsAnimalTempFAZENDA.AsInteger > 0));
+
+      if not Result then
+        Break;
+
+      DmDados.cdsAnimalTemp.Next;
+    end;
+  end;
+
 var
   Trans: TDBXTransaction;
 begin
-  inherited;
+  Screen.ActiveForm.Perform(WM_NEXTDLGCTL,0,0);
+  var sucesso := False;
+
   if (DmDados.cdsAnimalTemp.RecordCount > 0) and (DmDados.cdsAnimal.State = dsBrowse) then
   begin
-    Trans := DmDados.Acesso.BeginTransaction;
-    try
-      DmDados.cdsAnimalTemp.First;
-      while not DmDados.cdsAnimalTemp.Eof do
-      begin
-        DmDados.cdsAnimal.Append;
+    if ValidarMultiplosRegistros then
+    begin
+      Trans := DmDados.Acesso.BeginTransaction;
+      try
+        DmDados.cdsAnimalTemp.First;
+        while not DmDados.cdsAnimalTemp.Eof do
+        begin
+          DmDados.cdsAnimal.Append;
 
-        DmDados.cdsAnimalID.AsInteger      := NewCodigo;
-        DmDados.cdsAnimalTAG.AsString      := DmDados.cdsAnimalTempTAG.AsString;
-        DmDados.cdsAnimalFAZENDA.AsInteger := DmDados.cdsAnimalTempFAZENDA.AsInteger;
+          DmDados.cdsAnimalID.AsInteger      := NewCodigo;
+          DmDados.cdsAnimalTAG.AsString      := DmDados.cdsAnimalTempTAG.AsString;
+          DmDados.cdsAnimalFAZENDA.AsInteger := DmDados.cdsAnimalTempFAZENDA.AsInteger;
 
-        DmDados.cdsAnimal.Post;
+          DmDados.cdsAnimal.Post;
 
-        DmDados.cdsAnimalTemp.Next;
+          DmDados.cdsAnimalTemp.Next;
+        end;
+        //Aqui começa a parte de controle de transações no banco de dados...
+        if DmDados.cdsAnimal.ApplyUpdates(0) = 0 then
+        begin
+          DmDados.Acesso.CommitFreeAndNil(Trans);
+          DmDados.cdsAnimalTemp.EmptyDataSet;
+
+          PageControl1.ActivePageIndex := 0;
+          sucesso                      := True;
+
+          DmDados.cdsAnimal.Refresh;
+          Application.MessageBox('Todos os registros foram gravados com sucesso !', 'Aviso', MB_ICONINFORMATION + MB_OK)
+
+        end
+        else
+        begin
+          DmDados.Acesso.RollbackFreeAndNil(Trans);
+          Application.MessageBox('Houve falhas ao gravar os registros.', 'Aviso', MB_ICONINFORMATION + MB_OK);
+        end;
+      finally
+        if Assigned(Trans) then
+          FreeAndNil(Trans);
       end;
-      if DmDados.cdsAnimal.ApplyUpdates(0) = 0 then
-      begin
-        DmDados.Acesso.CommitFreeAndNil(Trans);
-        Application.MessageBox('Todos os registros foram gravados com sucesso !', 'Aviso', MB_ICONINFORMATION + MB_OK)
-      end
-      else
-      begin
-        DmDados.Acesso.RollbackFreeAndNil(Trans);
-        Application.MessageBox('Houve falhas ao gravar os registros.', 'Aviso', MB_ICONINFORMATION + MB_OK);
-      end;
-    finally
-      if Assigned(Trans) then
-        FreeAndNil(Trans);
-    end;
+    end
+    else
+      Application.MessageBox('Informar os campos "TAG" e "Fazenda" em todos os registros ante de continuar !', 'Aviso', MB_ICONINFORMATION + MB_OK);
   end
   else
   if DmDados.cdsAnimal.State = dsEdit then
   begin
-    DmDados.cdsAnimal.Post;
-    DmDados.cdsAnimal.ApplyUpdates(0);
+    if (DBEdit2.Value > 0) and
+       (DBEdit3.Value > 0) then
+    begin
+      sucesso                      := True;
+      DmDados.cdsAnimal.Post;
+      DmDados.cdsAnimal.ApplyUpdates(0)
+    end
+    else
+      Application.MessageBox('Informar os campos "TAG" e "Fazenda" ante de continuar !', 'Aviso', MB_ICONINFORMATION + MB_OK);
   end;
+  if sucesso then
+    inherited;
 end;
 
 procedure TFrmAnimal.cxGridAnimalTempFAZENDAPropertiesButtonClick(
@@ -206,29 +262,6 @@ begin
   end;
 end;
 
-procedure TFrmAnimal.cxGridAnimalTempFAZENDAPropertiesValidate(Sender: TObject;
-  var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
-begin
-  inherited;
-
-  DmDados.SQLQuery.Close;
-  DmDados.SQLQuery.SQL.Clear;
-  DmDados.SQLQuery.SQL.Add(Format('select * from fazenda where id = %s', [VarToStr(DisplayValue)]));
-
-  DmDados.SQLQuery.Open;
-
-  if not DmDados.SQLQuery.IsEmpty then
-  begin
-    DmDados.cdsAnimalTemp.FieldByName('fazenda').AsInteger := DmDados.SQLQuery.FieldByName('id').AsInteger;
-    DmDados.cdsAnimalTemp.FieldByName('nome').AsString     := DmDados.SQLQuery.FieldByName('nome').AsString
-  end
-  else
-  begin
-    DmDados.cdsAnimalTempNOME.AsString      := EmptyStr;
-    DmDados.cdsAnimalTempFAZENDA.AsInteger  := 0;
-  end;
-end;
-
 procedure TFrmAnimal.DBEdit3Exit(Sender: TObject);
 begin
   inherited;
@@ -249,6 +282,13 @@ begin
     DmDados.cdsAnimalTempNOME.AsString      := EmptyStr;
     DmDados.cdsAnimalTempFAZENDA.AsInteger  := 0;
   end;
+end;
+
+procedure TFrmAnimal.DBEdit3PropertiesChange(Sender: TObject);
+begin
+  inherited;
+  if DmDados.cdsAnimal.State <> dsBrowse then
+    DmDados.cdsAnimalNOME.AsString := EmptyStr;
 end;
 
 procedure TFrmAnimal.FormShow(Sender: TObject);

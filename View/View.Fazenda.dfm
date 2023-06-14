@@ -4,7 +4,7 @@ inherited FrmFazenda: TFrmFazenda
   PixelsPerInch = 96
   TextHeight = 13
   inherited PageControl1: TPageControl
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     inherited TabSheet1: TTabSheet
       inherited cxGrid1: TcxGrid
         inherited cxGrid1DBTableView1: TcxGridDBTableView
@@ -70,5 +70,10 @@ inherited FrmFazenda: TFrmFazenda
         end
       end
     end
+  end
+  inherited cxStyleRepository1: TcxStyleRepository
+    Left = 872
+    Top = 88
+    PixelsPerInch = 96
   end
 end

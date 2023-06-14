@@ -35,6 +35,7 @@ object Base: TBase
         Align = alClient
         TabOrder = 0
         object cxGrid1DBTableView1: TcxGridDBTableView
+          OnDblClick = cxGrid1DBTableView1DblClick
           Navigator.Buttons.CustomButtons = <>
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <>
@@ -44,6 +45,7 @@ object Base: TBase
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsView.GroupByBox = False
+          Styles.ContentOdd = cxStyleOdd
         end
         object cxGrid1Level1: TcxGridLevel
           GridView = cxGrid1DBTableView1
@@ -7084,5 +7086,15 @@ object Base: TBase
       FE0FF07F007FFFFFFFC467FF8000007FFFFFFFFF00FFFFFFFFF00FFFC00000FF
       FFFFFFFF00FFFFFFFFFC3FFFE00001FF00000000000000000000000000000000
       000000000000}
+  end
+  object cxStyleRepository1: TcxStyleRepository
+    Left = 856
+    Top = 96
+    PixelsPerInch = 96
+    object cxStyleOdd: TcxStyle
+      AssignedValues = [svColor, svTextColor]
+      Color = clInfoBk
+      TextColor = clBlack
+    end
   end
 end

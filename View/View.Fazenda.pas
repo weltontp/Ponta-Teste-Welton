@@ -66,7 +66,10 @@ begin
   if not DmDados.cdsFazenda.IsEmpty then
   begin
     if Application.MessageBox(PChar(Format('Deseja realmente excluir a fazenda: "%s"', [DmDados.cdsFazendaNOME.AsString])), 'Aviso', MB_ICONQUESTION + MB_YESNO) = ID_YES then
+    begin
       DmDados.cdsFazenda.Delete;
+      DmDados.cdsFazenda.ApplyUpdates(0);
+    end;
   end
   else
     Application.MessageBox('Não existem registros para excluir. Verifique !', 'Aviso', MB_ICONINFORMATION + MB_OK)

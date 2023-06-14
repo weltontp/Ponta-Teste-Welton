@@ -4,7 +4,7 @@ inherited FrmAnimal: TFrmAnimal
   PixelsPerInch = 96
   TextHeight = 13
   inherited PageControl1: TPageControl
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     inherited TabSheet1: TTabSheet
       inherited cxGrid1: TcxGrid
         inherited cxGrid1DBTableView1: TcxGridDBTableView
@@ -66,6 +66,27 @@ inherited FrmAnimal: TFrmAnimal
             Font.Style = [fsBold]
             ParentFont = False
           end
+          object DBEdit3: TcxDBCurrencyEdit
+            Left = 32
+            Top = 182
+            DataBinding.DataField = 'FAZENDA'
+            DataBinding.DataSource = DmDados.dsAnimal
+            Properties.AssignedValues.DisplayFormat = True
+            Properties.DecimalPlaces = 0
+            Properties.OnChange = DBEdit3PropertiesChange
+            TabOrder = 5
+            Width = 118
+          end
+          object DBEdit2: TcxDBCurrencyEdit
+            Left = 32
+            Top = 118
+            DataBinding.DataField = 'TAG'
+            DataBinding.DataSource = DmDados.dsAnimal
+            Properties.AssignedValues.DisplayFormat = True
+            Properties.DecimalPlaces = 0
+            TabOrder = 4
+            Width = 118
+          end
           object DBEdit1: TDBEdit
             Left = 32
             Top = 60
@@ -75,27 +96,6 @@ inherited FrmAnimal: TFrmAnimal
             DataSource = DmDados.dsAnimal
             ReadOnly = True
             TabOrder = 0
-          end
-          object DBEdit2: TDBEdit
-            Left = 32
-            Top = 118
-            Width = 118
-            Height = 21
-            CharCase = ecUpperCase
-            DataField = 'TAG'
-            DataSource = DmDados.dsAnimal
-            TabOrder = 1
-          end
-          object DBEdit3: TDBEdit
-            Left = 32
-            Top = 182
-            Width = 118
-            Height = 21
-            CharCase = ecUpperCase
-            DataField = 'FAZENDA'
-            DataSource = DmDados.dsAnimal
-            TabOrder = 2
-            OnExit = DBEdit3Exit
           end
           object BitBtn1: TBitBtn
             Left = 156
@@ -137,7 +137,7 @@ inherited FrmAnimal: TFrmAnimal
               01AB0000001F0000000000000000000000000000000000000000000000000000
               0000000000000100004201000194010001A0010001A00100019C010000600000
               0001000000000000000000000000000000000000000000000000}
-            TabOrder = 3
+            TabOrder = 1
             OnClick = BitBtn1Click
           end
           object DBEdit4: TDBEdit
@@ -149,7 +149,7 @@ inherited FrmAnimal: TFrmAnimal
             DataField = 'NOME'
             DataSource = DmDados.dsAnimal
             ReadOnly = True
-            TabOrder = 4
+            TabOrder = 2
           end
           object cxGrid2: TcxGrid
             Left = 2
@@ -157,10 +157,10 @@ inherited FrmAnimal: TFrmAnimal
             Width = 903
             Height = 436
             Align = alClient
-            TabOrder = 5
+            TabOrder = 3
             Visible = False
-            ExplicitLeft = 450
-            ExplicitTop = 60
+            ExplicitLeft = 184
+            ExplicitTop = 14
             object cxGridAnimalTemp: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               DataController.DataSource = DmDados.dsAnimalTemp
@@ -174,6 +174,9 @@ inherited FrmAnimal: TFrmAnimal
               OptionsView.GroupByBox = False
               object cxGridAnimalTempTAG: TcxGridDBColumn
                 DataBinding.FieldName = 'TAG'
+                PropertiesClassName = 'TcxCurrencyEditProperties'
+                Properties.DecimalPlaces = 0
+                Properties.DisplayFormat = '0'
               end
               object cxGridAnimalTempFAZENDA: TcxGridDBColumn
                 DataBinding.FieldName = 'FAZENDA'
@@ -216,7 +219,6 @@ inherited FrmAnimal: TFrmAnimal
                     Kind = bkGlyph
                   end>
                 Properties.OnButtonClick = cxGridAnimalTempFAZENDAPropertiesButtonClick
-                Properties.OnValidate = cxGridAnimalTempFAZENDAPropertiesValidate
                 Options.ShowEditButtons = isebAlways
               end
               object cxGridAnimalTempNOME: TcxGridDBColumn
@@ -231,5 +233,8 @@ inherited FrmAnimal: TFrmAnimal
         end
       end
     end
+  end
+  inherited cxStyleRepository1: TcxStyleRepository
+    PixelsPerInch = 96
   end
 end

@@ -1,0 +1,241 @@
+inherited FrmAnimal: TFrmAnimal
+  Caption = 'Cadastro - Animal'
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited PageControl1: TPageControl
+    ActivePage = TabSheet2
+    inherited TabSheet1: TTabSheet
+      inherited cxGrid1: TcxGrid
+        inherited cxGrid1DBTableView1: TcxGridDBTableView
+          DataController.DataSource = DmDados.dsAnimal
+          object cxGrid1DBTableView1ID: TcxGridDBColumn
+            DataBinding.FieldName = 'ID'
+          end
+          object cxGrid1DBTableView1TAG: TcxGridDBColumn
+            DataBinding.FieldName = 'TAG'
+          end
+          object cxGrid1DBTableView1FAZENDA: TcxGridDBColumn
+            DataBinding.FieldName = 'FAZENDA'
+          end
+          object cxGrid1DBTableView1NOME: TcxGridDBColumn
+            DataBinding.FieldName = 'NOME'
+          end
+        end
+      end
+    end
+    inherited TabSheet2: TTabSheet
+      inherited Panel2: TPanel
+        inherited GroupBox1: TGroupBox
+          object Label1: TLabel
+            Left = 32
+            Top = 40
+            Width = 13
+            Height = 14
+            Caption = 'Id'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -12
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object Label2: TLabel
+            Left = 32
+            Top = 98
+            Width = 24
+            Height = 14
+            Caption = 'TAG'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -12
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object Label3: TLabel
+            Left = 32
+            Top = 162
+            Width = 49
+            Height = 14
+            Caption = 'Fazenda'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -12
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object DBEdit2: TcxDBCurrencyEdit
+            Left = 32
+            Top = 118
+            DataBinding.DataField = 'TAG'
+            DataBinding.DataSource = DmDados.dsAnimal
+            Properties.AssignedValues.DisplayFormat = True
+            Properties.DecimalPlaces = 0
+            TabOrder = 5
+            Width = 118
+          end
+          object DBEdit1: TDBEdit
+            Left = 32
+            Top = 60
+            Width = 73
+            Height = 21
+            DataField = 'ID'
+            DataSource = DmDados.dsAnimal
+            ReadOnly = True
+            TabOrder = 0
+          end
+          object DBEdit3: TDBEdit
+            Left = 32
+            Top = 182
+            Width = 118
+            Height = 21
+            CharCase = ecUpperCase
+            DataField = 'FAZENDA'
+            DataSource = DmDados.dsAnimal
+            TabOrder = 1
+            OnExit = DBEdit3Exit
+          end
+          object BitBtn1: TBitBtn
+            Left = 156
+            Top = 180
+            Width = 32
+            Height = 26
+            Glyph.Data = {
+              36040000424D3604000000000000360000002800000010000000100000000100
+              2000000000000004000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              000000000000000000000000000000000015010001A401000189000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000015010001AE00000026010001A9000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              00000000000000000015010001AE00000026010001A90000002D000000000000
+              0000000000000000000000000005000000300100004000000018000000000000
+              000000000015010001AE00000026010001AA0000002E00000000000000000000
+              0000000000160100019B0100019C010000700100006401000196010001A80100
+              0047010001AE00000026010001AA0000002F0000000000000000000000000000
+              003A010001A80000001E00000000000000000000000000000000000000090100
+              0195010001B2010001AD000000310000000000000000000000000000000C0100
+              01B0000000060000000000000000000000000000000000000000000000000000
+              00000100019B0100004D00000000000000000000000000000000010001820000
+              0032000000000000000000000000000000000000000000000000000000000000
+              000000000010010001A400000000000000000000000000000000010001A20000
+              0000000000000000000000000000000000000000000000000000000000000000
+              000000000000010001A700000008000000000000000000000000010001A00000
+              0000000000000000000000000000000000000000000000000000000000000000
+              000000000000010000780000002B000000000000000000000000010001A10000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000100018D000000130000000000000000000000000100019F0000
+              0004000000000000000000000000000000000000000000000000000000000000
+              000000000000010001A4000000000000000000000000000000000100004C0100
+              0076000000000000000000000000000000000000000000000000000000000000
+              00000000003E0100018200000000000000000000000000000000000000000100
+              019B000000370000000000000000000000000000000000000000000000000000
+              0016010001AF0000000600000000000000000000000000000000000000000000
+              000C010001950100007A0000000E000000000000000000000006010000570100
+              01AB0000001F0000000000000000000000000000000000000000000000000000
+              0000000000000100004201000194010001A0010001A00100019C010000600000
+              0001000000000000000000000000000000000000000000000000}
+            TabOrder = 2
+            OnClick = BitBtn1Click
+          end
+          object DBEdit4: TDBEdit
+            Left = 194
+            Top = 182
+            Width = 311
+            Height = 21
+            CharCase = ecUpperCase
+            DataField = 'NOME'
+            DataSource = DmDados.dsAnimal
+            ReadOnly = True
+            TabOrder = 3
+          end
+          object cxGrid2: TcxGrid
+            Left = 2
+            Top = 15
+            Width = 903
+            Height = 436
+            Align = alClient
+            TabOrder = 4
+            Visible = False
+            ExplicitLeft = 243
+            ExplicitTop = 23
+            object cxGridAnimalTemp: TcxGridDBTableView
+              Navigator.Buttons.CustomButtons = <>
+              DataController.DataSource = DmDados.dsAnimalTemp
+              DataController.Summary.DefaultGroupSummaryItems = <>
+              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.SummaryGroups = <>
+              OptionsData.Appending = True
+              OptionsData.CancelOnExit = False
+              OptionsData.Deleting = False
+              OptionsView.ShowEditButtons = gsebAlways
+              OptionsView.GroupByBox = False
+              object cxGridAnimalTempTAG: TcxGridDBColumn
+                DataBinding.FieldName = 'TAG'
+                PropertiesClassName = 'TcxCurrencyEditProperties'
+                Properties.DecimalPlaces = 0
+                Properties.DisplayFormat = '0'
+              end
+              object cxGridAnimalTempFAZENDA: TcxGridDBColumn
+                DataBinding.FieldName = 'FAZENDA'
+                PropertiesClassName = 'TcxButtonEditProperties'
+                Properties.Buttons = <
+                  item
+                    Default = True
+                    Glyph.SourceDPI = 96
+                    Glyph.Data = {
+                      89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+                      610000000B744558745469746C65005A6F6F6D3BCF09FEBC0000035A49444154
+                      785E7D936B4C1C7514C57F33BBB0BBBC7641046A2AD0D242B616ABB605D41462
+                      7996F8819268254693A6311AF41BA6180214A4055A959AC6588DB18FB0049342
+                      237DA821585B405AB1A948080F53A3B5B42C9447175876766699BF5308899F3C
+                      C9B92737B9E7E4DE0F1721C40A01D3C79F77EC38F54D5FFBD9B6FEFB67DB6F8A
+                      33E7FA27BF6AE9B950FB514B26100C486BF3D547DB015869720BF759BE7475D7
+                      B67D37A88EFE392516BD7E616045476E4F0AD7F9FEC0E1A6F39FEEC8C87500B2
+                      E1E1FDDA16D660FAA2F9DAE1CEEE31A16ACBE287BE7F44F5C95FC581DAABA2CA
+                      D04BBD7F0BEF922A5ABFFD4594D7B95A011B2095967F0D80FCC9C94BDBA31CF6
+                      83BBD236D2E41AA4F3C63D0AD2E229CE4B25608DA2A3D7CDF1D62172B2B6E270
+                      D85F2B39F0E11EC0E4F3F901904342EC155B926383AEDE9A60CAE3A766FF76E2
+                      9F70101F63E3796734492949B83D1A3FDD9CE099D44482ADF652204851140064
+                      1D9196B83E8A1F6F8DB3775722F37EC1AC6F9939839884618064E77A6E0C4FB2
+                      31218E40403C07981545E5C25BE9C89AA6AFB35ACD3C58505892830C73803925
+                      C0BCA61B5C263C44223A3204AFAA116C09C6AF6A9180E1D3305BACC88AE29F5A
+                      F269C6908D2BB73D8CCDAA3C547566D4004B0822224CE8928AC36165EEA11763
+                      F579004D0BA0EB3AF2C282B767E48F09763A63989D79C0A8C7CFC8829F2509C2
+                      C34D58424CDC754FB32DE9318686FFC2E75B1C00960D1845204FBAC74F5DECFC
+                      8DF4CD51C44698718FDFC32C544243C1A72A0C8EDE415AD6D8141B46C7C51E3C
+                      3313CD802684BE1220019637DEFDECF453290925050569FC7EDF38C3ED61DAD8
+                      22CE6E2525CEC106870D97EB32E18B6344DEF9BEFE83CBC34781C573FB5FD065
+                      40FDB9ABB9B4EFFAC089A6136D3AD3D3BCEC5CC77BBB9DE427C7B078779C63C7
+                      CE10ED1DA2B67433D9D9CF561CC9771E04425F39DD27AFFD810C583372DECECB
+                      2EAAE8CA2D3EA4E4141F12D945556A6661D9B56D19FB4A2AB3363474D7BF2AC4
+                      40A3B85EBF5754BF94DC08D8FFFB4C1260066C4038605F2561800588284B7FB2
+                      BEABB25088DE32D1539927EAF2B71E917617D5201020745851C12A044820B1DA
+                      5FE9689081B0779E8EAB28CCDA549E9F9380CB35E6E5FFD0F2FA4E1A3213A87B
+                      319E9A8CF8B55323DE4C7EBCEE78EE16AD714F6ACBBF059CA12764F2DBD90000
+                      000049454E44AE426082}
+                    Kind = bkGlyph
+                  end>
+                Properties.OnButtonClick = cxGridAnimalTempFAZENDAPropertiesButtonClick
+                Properties.OnValidate = cxGridAnimalTempFAZENDAPropertiesValidate
+                Options.ShowEditButtons = isebAlways
+              end
+              object cxGridAnimalTempNOME: TcxGridDBColumn
+                DataBinding.FieldName = 'NOME'
+                Options.Editing = False
+              end
+            end
+            object cxGridLevel1: TcxGridLevel
+              GridView = cxGridAnimalTemp
+            end
+          end
+        end
+      end
+    end
+  end
+  inherited cxStyleRepository1: TcxStyleRepository
+    PixelsPerInch = 96
+  end
+end
