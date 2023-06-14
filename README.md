@@ -9,4 +9,4 @@
 4- Relatorio foi utilizado Report Builder VS: 22.02
 
 Descrição de funcionamento do cadastro de animail que possuia o diferencial de inserir varios registros e ao final salvar todos se nao houver erros (commit) e voltar tudo caso hava erros (rollback)
-1- Quando for clicado em "Incluir" o usuário sera levado para um novo grid na aba (cadastro) onde ele pode ir inserindo os animais e ao final ao clicar no menu "Salvar" todos os registros incluidos neste grid irão para o banco de dados.
+1- Quando for clicado em "Incluir" o usuário serÁ levado para um novo grid na aba (cadastro) onde ele pode ir inserindo os animais (SETA PARA BAIXO NESTE GRID ABRIRÁ UM NOVO REGISTRO) e ao final ao clicar no menu "Salvar" todos os registros incluidos neste grid irão para o banco de dados.
