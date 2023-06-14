@@ -90,10 +90,27 @@ object DmDados: TDmDados
     Params = <>
     SQL.Strings = (
       'select a.*, f.nome'
-      'from animal a left join fazenda f on f.id = a.id')
+      'from animal a left join fazenda f on f.id = a.fazenda'
+      'order by a.id')
     SQLConnection = Acesso
     Left = 312
     Top = 72
+    object sqlAnimalID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object sqlAnimalTAG: TStringField
+      FieldName = 'TAG'
+      Size = 15
+    end
+    object sqlAnimalFAZENDA: TIntegerField
+      FieldName = 'FAZENDA'
+    end
+    object sqlAnimalNOME: TStringField
+      FieldName = 'NOME'
+      ProviderFlags = []
+      Size = 60
+    end
   end
   object dspAnimal: TDataSetProvider
     DataSet = sqlAnimal
@@ -122,6 +139,7 @@ object DmDados: TDmDados
     object cdsAnimalNOME: TStringField
       DisplayLabel = 'Nome'
       FieldName = 'NOME'
+      ProviderFlags = []
       Size = 60
     end
   end
@@ -141,22 +159,22 @@ object DmDados: TDmDados
     Aggregates = <>
     Params = <>
     ProviderName = 'dspAnimal'
-    AfterPost = cdsAnimalTempAfterPost
+    BeforePost = cdsAnimalTempBeforePost
     Left = 432
     Top = 200
-    object IntegerField1: TIntegerField
+    object cdsAnimalTempID: TIntegerField
       DisplayLabel = 'Id'
       FieldName = 'ID'
     end
-    object StringField1: TStringField
+    object cdsAnimalTempTAG: TStringField
       FieldName = 'TAG'
       Size = 15
     end
-    object IntegerField2: TIntegerField
+    object cdsAnimalTempFAZENDA: TIntegerField
       DisplayLabel = 'Fazenda'
       FieldName = 'FAZENDA'
     end
-    object StringField2: TStringField
+    object cdsAnimalTempNOME: TStringField
       DisplayLabel = 'Nome'
       FieldName = 'NOME'
       Size = 60
