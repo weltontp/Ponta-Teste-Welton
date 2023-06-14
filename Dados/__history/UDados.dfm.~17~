@@ -1,0 +1,171 @@
+object DmDados: TDmDados
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  Height = 454
+  Width = 1034
+  object Acesso: TSQLConnection
+    DriverName = 'Firebird'
+    LoginPrompt = False
+    Params.Strings = (
+      'DriverUnit=Data.DBXFirebird'
+      
+        'DriverPackageLoader=TDBXDynalinkDriverLoader,DbxCommonDriver260.' +
+        'bpl'
+      
+        'DriverAssemblyLoader=Borland.Data.TDBXDynalinkDriverLoader,Borla' +
+        'nd.Data.DbxCommonDriver,Version=24.0.0.0,Culture=neutral,PublicK' +
+        'eyToken=91d62ebb5b0d1b1b'
+      
+        'MetaDataPackageLoader=TDBXFirebirdMetaDataCommandFactory,DbxFire' +
+        'birdDriver260.bpl'
+      
+        'MetaDataAssemblyLoader=Borland.Data.TDBXFirebirdMetaDataCommandF' +
+        'actory,Borland.Data.DbxFirebirdDriver,Version=24.0.0.0,Culture=n' +
+        'eutral,PublicKeyToken=91d62ebb5b0d1b1b'
+      'GetDriverFunc=getSQLDriverINTERBASE'
+      'LibraryName=dbxfb.dll'
+      'LibraryNameOsx=libsqlfb.dylib'
+      'VendorLib=fbclient.dll'
+      'VendorLibWin64=fbclient.dll'
+      'VendorLibOsx=/Library/Frameworks/Firebird.framework/Firebird'
+      'Database=C:\Projetos\Agro\agro.fdb'
+      'User_Name=sysdba'
+      'Password=masterkey'
+      'Role=RoleName'
+      'MaxBlobSize=-1'
+      'LocaleCode=0000'
+      'IsolationLevel=ReadCommitted'
+      'SQLDialect=3'
+      'CommitRetain=False'
+      'WaitOnLocks=True'
+      'TrimChar=False'
+      'BlobSize=-1'
+      'ErrorResourceFile='
+      'RoleName=RoleName'
+      'ServerCharSet='
+      'Trim Char=False')
+    Connected = True
+    Left = 24
+    Top = 40
+  end
+  object sqlFazenda: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select * from fazenda'
+      'order by id')
+    SQLConnection = Acesso
+    Left = 184
+    Top = 72
+  end
+  object dspFazenda: TDataSetProvider
+    DataSet = sqlFazenda
+    Left = 184
+    Top = 136
+  end
+  object cdsFazenda: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspFazenda'
+    Left = 184
+    Top = 200
+    object cdsFazendaID: TIntegerField
+      DisplayLabel = 'Id'
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsFazendaNOME: TStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'NOME'
+      Size = 60
+    end
+  end
+  object dsFazenda: TDataSource
+    DataSet = cdsFazenda
+    Left = 184
+    Top = 256
+  end
+  object sqlAnimal: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select a.*, f.nome'
+      'from animal a left join fazenda f on f.id = a.id')
+    SQLConnection = Acesso
+    Left = 312
+    Top = 72
+  end
+  object dspAnimal: TDataSetProvider
+    DataSet = sqlAnimal
+    Left = 312
+    Top = 136
+  end
+  object cdsAnimal: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspAnimal'
+    Left = 312
+    Top = 200
+    object cdsAnimalID: TIntegerField
+      DisplayLabel = 'Id'
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsAnimalTAG: TStringField
+      FieldName = 'TAG'
+      Size = 15
+    end
+    object cdsAnimalFAZENDA: TIntegerField
+      DisplayLabel = 'Fazenda'
+      FieldName = 'FAZENDA'
+    end
+    object cdsAnimalNOME: TStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'NOME'
+      ProviderFlags = []
+      Size = 60
+    end
+  end
+  object dsAnimal: TDataSource
+    DataSet = cdsAnimal
+    Left = 312
+    Top = 256
+  end
+  object SQLQuery: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Acesso
+    Left = 24
+    Top = 104
+  end
+  object cdsAnimalTemp: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspAnimal'
+    BeforePost = cdsAnimalTempBeforePost
+    Left = 432
+    Top = 200
+    object cdsAnimalTempID: TIntegerField
+      DisplayLabel = 'Id'
+      FieldName = 'ID'
+    end
+    object cdsAnimalTempTAG: TStringField
+      FieldName = 'TAG'
+      Size = 15
+    end
+    object cdsAnimalTempFAZENDA: TIntegerField
+      DisplayLabel = 'Fazenda'
+      FieldName = 'FAZENDA'
+    end
+    object cdsAnimalTempNOME: TStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'NOME'
+      Size = 60
+    end
+  end
+  object dsAnimalTemp: TDataSource
+    DataSet = cdsAnimalTemp
+    Left = 432
+    Top = 256
+  end
+end

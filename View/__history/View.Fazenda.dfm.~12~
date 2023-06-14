@@ -1,0 +1,75 @@
+inherited FrmFazenda: TFrmFazenda
+  Caption = 'Cadastro - Fazenda'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited PageControl1: TPageControl
+    ActivePage = TabSheet1
+    inherited TabSheet1: TTabSheet
+      inherited cxGrid1: TcxGrid
+        inherited cxGrid1DBTableView1: TcxGridDBTableView
+          DataController.DataSource = DmDados.dsFazenda
+          object cxGrid1DBTableView1ID: TcxGridDBColumn
+            DataBinding.FieldName = 'ID'
+          end
+          object cxGrid1DBTableView1NOME: TcxGridDBColumn
+            DataBinding.FieldName = 'NOME'
+          end
+        end
+      end
+    end
+    inherited TabSheet2: TTabSheet
+      inherited Panel2: TPanel
+        inherited GroupBox1: TGroupBox
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          object Label1: TLabel
+            Left = 32
+            Top = 40
+            Width = 33
+            Height = 14
+            Caption = 'Id'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -12
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object Label2: TLabel
+            Left = 32
+            Top = 98
+            Width = 34
+            Height = 14
+            Caption = 'Nome'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -12
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object DBEdit1: TDBEdit
+            Left = 32
+            Top = 60
+            Width = 73
+            Height = 21
+            DataField = 'ID'
+            DataSource = DmDados.dsFazenda
+            ReadOnly = True
+            TabOrder = 0
+          end
+          object DBEdit2: TDBEdit
+            Left = 32
+            Top = 118
+            Width = 198
+            Height = 21
+            CharCase = ecUpperCase
+            DataField = 'NOME'
+            DataSource = DmDados.dsFazenda
+            TabOrder = 1
+          end
+        end
+      end
+    end
+  end
+end

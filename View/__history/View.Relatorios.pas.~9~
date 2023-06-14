@@ -1,0 +1,43 @@
+unit View.Relatorios;
+
+interface
+
+uses
+  UDados,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ppParameter, ppDesignLayer, ppBands,
+  ppCache, ppClass, ppComm, ppRelatv, ppProd, ppReport, ppCtrls, ppPrnabl, ppDB,
+  ppDBPipe, ppVar;
+
+type
+  TFrmRelatorios = class(TForm)
+    ppRelFazenda: TppReport;
+    ppHeaderBand1: TppHeaderBand;
+    ppDetailBand1: TppDetailBand;
+    ppFooterBand1: TppFooterBand;
+    ppDesignLayers1: TppDesignLayers;
+    ppDesignLayer1: TppDesignLayer;
+    ppParameterList1: TppParameterList;
+    ppLabel1: TppLabel;
+    ppDBText1: TppDBText;
+    ppDBText2: TppDBText;
+    ppPipelineFazenda: TppDBPipeline;
+    ppSystemVariable1: TppSystemVariable;
+    ppLine1: TppLine;
+    ppLine2: TppLine;
+    ppLabel2: TppLabel;
+    ppLabel3: TppLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmRelatorios: TFrmRelatorios;
+
+implementation
+
+{$R *.dfm}
+
+end.
