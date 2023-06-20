@@ -132,6 +132,16 @@ end;
 
 procedure TDmDados.DataModuleCreate(Sender: TObject);
 begin
+  var path := ExtractFilePath(ParamStr(0));
+
+  Acesso.Close;
+  Acesso.Params.Values['Database'] := Format('%sAGRO.FDB',    [path]);
+//  Acesso.Params.Add(Format('LibraryName=%s\dbxfb.dll',       [path]));
+//  Acesso.Params.Add(Format('VendorLib=%s\fbclient.dll',      [path]));
+//  Acesso.Params.Add(Format('VendorLibWin64=%s\fbclient.dll', [path]));
+  Acesso.Open;
+
+
   cdsFazenda.CreateDataSet;
   cdsAnimal.CreateDataSet;
   cdsAnimalTemp.CreateDataSet;

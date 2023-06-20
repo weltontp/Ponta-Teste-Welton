@@ -28,7 +28,7 @@ object DmDados: TDmDados
       'VendorLib=fbclient.dll'
       'VendorLibWin64=fbclient.dll'
       'VendorLibOsx=/Library/Frameworks/Firebird.framework/Firebird'
-      'Database=C:\Projetos\Agro\Ponta-Teste-Welton\agro.fdb'
+      'Database='
       'User_Name=sysdba'
       'Password=masterkey'
       'Role=RoleName'
@@ -44,7 +44,6 @@ object DmDados: TDmDados
       'RoleName=RoleName'
       'ServerCharSet='
       'Trim Char=False')
-    Connected = True
     Left = 24
     Top = 40
   end
